@@ -1,4 +1,4 @@
-package com.example.apacheavro
+package com.example.seller
 
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
