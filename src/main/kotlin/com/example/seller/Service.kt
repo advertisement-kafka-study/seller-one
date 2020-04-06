@@ -1,6 +1,5 @@
 package com.example.seller
 
-import com.example.advertisement.Advertisement
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.kafka.core.KafkaTemplate
@@ -20,9 +19,7 @@ class Service(
 
     @Scheduled(initialDelay = 1000, fixedDelay = 3000)
     fun producer() {
-        val advertisement = Advertisement()
-        advertisement.setId(counter.getAndIncrement().toLong())
-        advertisement.setName(applicationName)
+        val advertisement = Advertisement(id = counter.getAndIncrement().toString(), name = applicationName)
 
         log.info("Publishing Message=[$advertisement] to Topic=[${kafkaTemplate.defaultTopic}]")
         kafkaTemplate.sendDefault(applicationName, advertisement)
