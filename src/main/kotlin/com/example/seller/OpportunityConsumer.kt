@@ -13,7 +13,8 @@ class OpportunityConsumer(val advertisementProducer: AdvertisementProducer) {
     @KafkaListener(topics = ["\${opportunity-topic}"])
     fun consumer(record: ConsumerRecord<String, Opportunity>) {
         log.info("Consuming Message=[${record.value()}] Key=[${record.key()}]")
-        advertisementProducer.producer() // FIXME
+        val opportunity = record.value()
+        advertisementProducer.producer(opportunity)
     }
 
 }

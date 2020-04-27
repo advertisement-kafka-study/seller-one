@@ -10,7 +10,6 @@ import java.net.URI
 import java.time.ZoneOffset
 import java.time.ZonedDateTime
 import java.util.*
-import java.util.concurrent.atomic.AtomicInteger
 
 @Service
 class AdvertisementProducer(
@@ -20,10 +19,8 @@ class AdvertisementProducer(
 
     private final val log = LoggerFactory.getLogger(this::class.java)
 
-    private final val counter = AtomicInteger(1)
-
-    fun producer() {
-        val advertisement = Advertisement(id = counter.getAndIncrement().toString(), name = applicationName)
+    fun producer(opportunity: Opportunity) {
+        val advertisement = Advertisement(id = opportunity.id, name = applicationName)
         val cloudEvent: CloudEventImpl<Advertisement> = CloudEventBuilder.builder<Advertisement>()
                 .withId(UUID.randomUUID().toString())
                 .withSource(URI.create("/advertisements/${advertisement.id}"))
