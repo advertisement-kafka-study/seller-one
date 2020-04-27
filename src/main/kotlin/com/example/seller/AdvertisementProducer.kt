@@ -20,7 +20,7 @@ class AdvertisementProducer(
     private final val log = LoggerFactory.getLogger(this::class.java)
 
     fun producer(opportunity: Opportunity) {
-        val advertisement = Advertisement(id = opportunity.id, name = applicationName)
+        val advertisement = Advertisement(id = opportunity.id, content = applicationName, callback = opportunity.advReq.callbackData.url)
         val cloudEvent: CloudEventImpl<Advertisement> = CloudEventBuilder.builder<Advertisement>()
                 .withId(UUID.randomUUID().toString())
                 .withSource(URI.create("/advertisements/${advertisement.id}"))
